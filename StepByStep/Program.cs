@@ -7,18 +7,9 @@ namespace StepByStep
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, it is StepByStep");
-            Console.WriteLine("Do you want to say your name ?(y/n)");
-            string answer = Console.ReadLine();
-            if (answer == "y") Hello();
-            Matrix a = new Matrix(4, 4,new int[]{1,2,2,4,5,2,7,8,9,10,10,12,13,11,17,16});
-            Console.WriteLine("Детерминант: " + a.det());
-        }
-        static void Hello() {
-            Console.WriteLine("What is your name");
-            string name = Console.ReadLine();
-            Console.WriteLine($"Hello, {name}");
-        
+            Matrix a = new Matrix((int)4, (int)4,new double[]{1,2,2,4,5,2,7,8,9,10,10,12,13,11,17,16});
+            Console.WriteLine("Детерминант: " + a.Det());
+            Console.WriteLine("Обратная матрица: \n" + a.Inverse());
         }
     }
   public  class Matrix
