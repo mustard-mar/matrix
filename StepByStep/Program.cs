@@ -11,8 +11,9 @@ namespace StepByStep
             Console.WriteLine("Do you want to say your name ?(y/n)");
             string answer = Console.ReadLine();
             if (answer == "y") Hello();
-            Matrix a = new Matrix(4, 4,new int[]{1,2,2,4,5,2,7,8,9,10,10,12,13,11,17,16});
-            Console.WriteLine("Детерминант: " + a.det());
+            Matrix a = new Matrix((int)4, (int)4,new double[]{1,2,2,4,5,2,7,8,9,10,10,12,13,11,17,16});
+            Console.WriteLine("Детерминант: " + a.Det());
+            Console.WriteLine("Обратная матрица: \n" + a.Inverse());
         }
         static void Hello() {
             Console.WriteLine("What is your name");
@@ -23,15 +24,15 @@ namespace StepByStep
     }
   public  class Matrix
     {
-       private int[,] nums;
+       private double[,] nums;
        private int sizeY = 0;
        private int sizeX = 0;
 
-        public void SetValue(int y, int x, int value)
+        public void SetValue(int y, int x, double value)
         {
             nums[y, x] = value;
         }
-        public int GetValue(int y, int x)
+        public double GetValue(int y, int x)
         {
             return nums[y, x];
         }
@@ -43,16 +44,14 @@ namespace StepByStep
         {
             return sizeX;
         }
-
         public Matrix(int sizeY, int sizeX)
         {
-            nums = new int[sizeY, sizeX];
+            nums = new double[sizeY, sizeX];
             this.sizeY = sizeY;
             this.sizeX = sizeX;
-            
         }
-        public Matrix(int sizeY, int sizeX, int[] num) {
-            nums = new int[sizeY, sizeX];
+        public Matrix(int sizeY, int sizeX, double[] num) {
+            nums = new double[sizeY, sizeX];
             this.sizeY = sizeY;
             this.sizeX = sizeX;
             for (int y = 0; y < sizeY; y++)
@@ -72,7 +71,6 @@ namespace StepByStep
             }
             return result;
         }
-
 
         public static Matrix operator -(Matrix a)
         {
@@ -104,7 +102,7 @@ namespace StepByStep
         {
             return a + (-b);
         }
-        public static Matrix operator *(int numb, Matrix b)
+        public static Matrix operator *(double numb, Matrix b)
         {
             Matrix result = new Matrix(b.GetSizeY(), b.GetSizeX());
             for (int x = 0; x < result.GetSizeX(); x++)
@@ -117,7 +115,7 @@ namespace StepByStep
             return result;
         }
 
-        public static Matrix operator *(Matrix b, int numb)
+        public static Matrix operator *(Matrix b, double numb)
         {
             Matrix result = new Matrix(b.GetSizeY(), b.GetSizeX());
             for (int x = 0; x < result.GetSizeX(); x++)
@@ -135,7 +133,7 @@ namespace StepByStep
             {
                 for (int y = 0; y < b.GetSizeX(); y++)
                 {
-                    int sum = 0;
+                    double sum = 0;
                     for (int k = 0; k < a.GetSizeX(); k++)
                     {
                         sum = sum + a.GetValue(y, k) * b.GetValue(k, x);
@@ -146,8 +144,27 @@ namespace StepByStep
 
             return result;
         }
+        public Matrix Inverse()
+        {
+            Matrix result = new Matrix(GetSizeY(), GetSizeX());
+            result = Adj().Transpose() *( 1/Det());
 
 
+
+            return result;
+        }
+        public Matrix Adj()
+        {
+            Matrix result = new Matrix(GetSizeY(), GetSizeX());
+            for (int y = 0; y < GetSizeY(); y++)
+            {
+                for (int x = 0; x < GetSizeX(); x++)
+                {
+                    result.SetValue(y, x, Math.Pow(-1, y + x) * Minor(y, x));
+                }
+            }
+            return result;
+        }
         public Matrix Transpose()
         {
             Matrix result = new Matrix(GetSizeY(), GetSizeX());
@@ -174,15 +191,15 @@ namespace StepByStep
             str = sb.ToString();
             return str;
         }
-        public double det() {
+        public double Det() {
             double result = 0;
             for (int j = 0; j < GetSizeX(); j++)
             {
-                result = result + Math.Pow(-1, j)*nums[0,j] * minor(0,j);
+                result = result + Math.Pow(-1, j)*nums[0,j] * Minor(0,j);
             }
             return result;
         }
-        public double minor(int i, int j)
+        public double Minor(int i, int j)
         {
             Matrix MinorMatrix = new Matrix(GetSizeX() - 1, GetSizeX() - 1);
             int ya = 0;
@@ -203,7 +220,7 @@ namespace StepByStep
             if (MinorMatrix.GetSizeX() == 1) return MinorMatrix.GetValue(0, 0);
             else
             if (MinorMatrix.GetSizeX() == 2) return MinorMatrix.GetValue(0, 0) * MinorMatrix.GetValue(1, 1) - MinorMatrix.GetValue(1, 0) * MinorMatrix.GetValue(0, 1);
-            else return MinorMatrix.det();
+            else return MinorMatrix.Det();
         }
     
     }
