@@ -14,12 +14,12 @@ namespace Unit_Tests
         [Test]
         public void Add()
         {
-            StepByStep.Matrix a = new StepByStep.Matrix(2, 2, new double[] { 1, 2, 3, 4 });
-            StepByStep.Matrix b = new StepByStep.Matrix(2, 2, new double[] { 4, 3, 2, 1 });
+            StepByStep.Matrix a = new StepByStep.Matrix(2, 2, new int[] { 1, 2, 3, 4 });
+            StepByStep.Matrix b = new StepByStep.Matrix(2, 2, new int[] { 4, 3, 2, 1 });
 
             StepByStep.Matrix c = a + b;
 
-            StepByStep.Matrix d = new StepByStep.Matrix(2, 2, new double[] { 5, 3, 5, 5 });
+            StepByStep.Matrix d = new StepByStep.Matrix(2, 2, new int[] { 5, 3, 5, 5 });
 
             for(int i = 0; i < c.GetSizeY(); i++)
             {
