@@ -117,7 +117,10 @@ namespace StepByStep
             }
             return result;
         }
-        public static Matrix operator *(Matrix a, Matrix b) {//работает только для квадратных матриц(надо поправить)
+        public static Matrix operator *(Matrix a, Matrix b) {
+                                                             // всё работает, a.getsizex()==b.getsizey()
+            if (a.GetSizeX()!=b.GetSizeY()) throw new ArgumentException("Matrix sixe is wrong");//нужно скомпилировать(проверить)
+            
             Matrix result = new Matrix(a.GetSizeY(), b.GetSizeX());
             for (int x = 0; x < a.GetSizeY(); x++)
             {
